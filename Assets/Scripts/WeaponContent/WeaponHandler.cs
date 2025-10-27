@@ -74,24 +74,17 @@ namespace WeaponContent
 
         private void FireWeapon()
         {
-            if (_currentWeapon == null) return;
+            if (_currentWeapon == null)
+                return;
 
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            _currentWeapon.Shoot();
 
             if (Physics.Raycast(ray, out RaycastHit hit, _currentWeapon.WeaponConfig.Range))
-            {
                 _currentWeapon.OnHit(hit);
-            }
-            
-            _currentWeapon.PlayMuzzleFlash();
-            _currentWeapon.PlaySound();
-            /*// Weapon отвечает за свои эффекты
-            _currentWeapon.PlayMuzzleFlash();
-            _currentWeapon.PlaySound();
-            _currentWeapon.PlayWeaponAnimation();
 
-            // Анимация рук игрока
-            _playerAnimator?.SetTrigger("Fire");*/
+
+            // _playerAnimator?.SetTrigger("Fire");
         }
 
         private void Reload()

@@ -7,7 +7,8 @@ namespace WeaponContent
     {
         [SerializeField] private WeaponConfig _weaponConfig;
         [SerializeField] private ParticleSystem _muzzleEffect;
-        [SerializeField]private AudioSource _audioSource;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private WeaponAnimator _weaponAnimator;
 
         public WeaponConfig WeaponConfig => _weaponConfig;
 
@@ -16,14 +17,11 @@ namespace WeaponContent
             Debug.Log("hit " + hit.collider.gameObject.name);
         }
 
-        public void PlayMuzzleFlash()
+        public void Shoot()
         {
             _muzzleEffect.Play();
-        }
-        
-        public void PlaySound()
-        {
             _audioSource.PlayOneShot(_weaponConfig.FireSound);
+            _weaponAnimator.PlayWeaponAnimation();
         }
     }
 }

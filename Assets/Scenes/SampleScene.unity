@@ -1915,6 +1915,8 @@ GameObject:
   - component: {fileID: 1632424747}
   - component: {fileID: 1632424748}
   - component: {fileID: 1632424749}
+  - component: {fileID: 1632424750}
+  - component: {fileID: 1632424751}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -1954,6 +1956,7 @@ MonoBehaviour:
   _weaponConfig: {fileID: 11400000, guid: a1912b318305c02479825e9db75c7cc3, type: 2}
   _muzzleEffect: {fileID: 1346946946}
   _audioSource: {fileID: 1632424749}
+  _weaponAnimator: {fileID: 1632424751}
 --- !u!114 &1632424748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1967,12 +1970,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 1508919934}
+  _weaponAnimator: {fileID: 1632424751}
   _swayAmount: 0.05
   _maxSwayAmount: 0.1
   _smoothAmount: 8
   _xSwayMultiplier: 100
   _ySwayMultiplier: 10
   _zSwayMultiplier: 100
+  _mouseMoveThreshold: 0.01
 --- !u!82 &1632424749
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2069,6 +2074,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1632424750
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632424745}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b782032131bab244994252ff4f846c06, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1632424751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632424745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a22f1cff418114593396bd03ccb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1632424750}
+  _playerInput: {fileID: 1508919934}
+  _mouseMoveThreshold: 0.01
 --- !u!1 &1634809657
 GameObject:
   m_ObjectHideFlags: 0

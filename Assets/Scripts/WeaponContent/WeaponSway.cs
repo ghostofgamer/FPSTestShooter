@@ -7,7 +7,8 @@ namespace WeaponContent
     {
 // @formatter:off
         [Header("References")]
-        [SerializeField] private PlayerInput _playerInput;   
+        [SerializeField] private PlayerInput _playerInput; 
+        [SerializeField]private WeaponAnimator _weaponAnimator;
         [Header("Sway Settings")]
         [SerializeField] private float _swayAmount = 0.05f;      
         [SerializeField] private float _maxSwayAmount = 0.1f;     
@@ -15,7 +16,8 @@ namespace WeaponContent
         [SerializeField] private float _xSwayMultiplier = 20f; 
         [SerializeField] private float _ySwayMultiplier = 10f; 
         [SerializeField] private float _zSwayMultiplier = 15f;
-        
+         [SerializeField] private float _mouseMoveThreshold = 0.01f;
+         
         private Vector3 _initialPosition;
         private Quaternion _initialRotation;
 // @formatter:on
@@ -28,8 +30,16 @@ namespace WeaponContent
 
         private void Update()
         {
+            float mouseSpeed = Mathf.Clamp01(
+                (Mathf.Abs(_playerInput.MouseXValue) + Mathf.Abs(_playerInput.MouseYValue)) * 0.5f);
+            
+            Debug.Log(mouseSpeed);
+
+            _weaponAnimator.PlayMoveIdleAnimation(mouseSpeed);
+
             if (_playerInput.IssAiming)
                 return;
+
 
             float swayX = Mathf.Clamp(-_playerInput.MouseXValue * _swayAmount, -_maxSwayAmount, _maxSwayAmount);
             float swayY = Mathf.Clamp(-_playerInput.MouseYValue * _swayAmount, -_maxSwayAmount, _maxSwayAmount);
