@@ -11,8 +11,7 @@ namespace PlayerContent
         private const string Vertical = "Vertical";
         private const string Jump = "Jump";
         
-        private bool _isAiming;
-        
+        public bool IssAiming{ get; private set; }
         public float MouseXValue { get; private set; }
         public float MouseYValue { get; private set; }
         public float X { get; private set; }
@@ -43,8 +42,8 @@ namespace PlayerContent
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    _isAiming = !_isAiming;
-                    AimStateChanged?.Invoke(_isAiming);
+                    IssAiming = !IssAiming;
+                    AimStateChanged?.Invoke(IssAiming);
                 }
 
                 if (Input.GetButtonDown(Jump))

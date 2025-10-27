@@ -941,6 +941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 1508919934}
   _camera: {fileID: 963194227}
+  _crosshair: {fileID: 1410252406}
   _defaultFOV: 60
   _aimFOV: 35
   _fovTransitionTime: 0.3
@@ -1544,7 +1545,7 @@ GameObject:
   - component: {fileID: 1410252409}
   - component: {fileID: 1410252408}
   m_Layer: 5
-  m_Name: Aim
+  m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1661,6 +1662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1632424746}
   - component: {fileID: 1632424747}
+  - component: {fileID: 1632424748}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -1697,6 +1699,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponConfig: {fileID: 11400000, guid: a1912b318305c02479825e9db75c7cc3, type: 2}
+--- !u!114 &1632424748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632424745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb1e89403a8b5247a392d1462559e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInput: {fileID: 1508919934}
+  _swayAmount: 0.05
+  _maxSwayAmount: 0.1
+  _smoothAmount: 8
+  _xSwayMultiplier: 100
+  _ySwayMultiplier: 10
+  _zSwayMultiplier: 100
 --- !u!1 &1634809657
 GameObject:
   m_ObjectHideFlags: 0
@@ -4115,9 +4136,9 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 705507995}
-  - {fileID: 1217036011}
-  - {fileID: 1716285781}
   - {fileID: 1215319849}
+  - {fileID: 705507995}
+  - {fileID: 1716285781}
   - {fileID: 1326341914}
+  - {fileID: 1217036011}
   - {fileID: 929456507}
