@@ -10,6 +10,7 @@ namespace CameraContent
         [Header("References")]
         [SerializeField] private PlayerInput _playerInput;
         [SerializeField]private Camera _camera;
+        [SerializeField]private GameObject _crosshair;
         [Space(3)]
         [Header("Settings")]
         [SerializeField] private float _defaultFOV = 60f;
@@ -35,6 +36,7 @@ namespace CameraContent
         private void Aiming(bool isAiming)
         {
             _targetFov = isAiming ? _aimFOV : _defaultFOV;
+            _crosshair.SetActive(!isAiming);
 
             if (_coroutine != null)
                 StopCoroutine(_coroutine);

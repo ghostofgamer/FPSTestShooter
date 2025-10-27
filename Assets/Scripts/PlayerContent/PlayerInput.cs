@@ -22,7 +22,8 @@ namespace PlayerContent
 
         public event Action RKeyPressed;
         public event Action<bool> AimStateChanged;
-        public event Action MouseZeroKeyPressed;
+        public event Action MouseLeftKeyPressed;
+        public event Action MouseLeftKeyReleased;
         public event Action MouseZeroKeyHoldDown;
         public event Action PausePressed;
         public event Action JumpPressed;
@@ -35,10 +36,10 @@ namespace PlayerContent
                     RKeyPressed?.Invoke();
 
                 if (Input.GetMouseButtonDown(0))
-                    MouseZeroKeyPressed?.Invoke();
-
-                if (Input.GetMouseButton(0))
-                    MouseZeroKeyHoldDown?.Invoke();
+                    MouseLeftKeyPressed?.Invoke();
+                
+                if (Input.GetMouseButtonUp(0))
+                    MouseLeftKeyReleased?.Invoke();
 
                 if (Input.GetMouseButtonDown(1))
                 {

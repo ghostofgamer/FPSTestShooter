@@ -8,6 +8,7 @@ namespace WeaponContent
     {
 // @formatter:off
         [Header("References")]
+        [SerializeField]private Camera _camera;
         [SerializeField] private Weapon _currentWeapon;
         [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private Transform _weaponPosDefault;
@@ -17,22 +18,78 @@ namespace WeaponContent
 // @formatter:on
 
         private Coroutine _aimCoroutine;
+        private Coroutine _autoFireCoroutine;
+        private bool _isShooting = false;
 
         private void OnEnable()
         {
-            // _playerInput.MouseZeroKeyPressed+=
             _playerInput.RKeyPressed += Reload;
             _playerInput.AimStateChanged += Aiming;
+            _playerInput.MouseLeftKeyPressed += Shoot;
+            _playerInput.MouseLeftKeyReleased += StopShoot;
         }
 
         private void OnDisable()
         {
             _playerInput.RKeyPressed -= Reload;
             _playerInput.AimStateChanged -= Aiming;
+            _playerInput.MouseLeftKeyPressed -= Shoot;
+            _playerInput.MouseLeftKeyReleased -= StopShoot;
         }
 
         private void Shoot()
         {
+            if (_currentWeapon == null)
+                return;
+
+            _isShooting = true;
+
+            if (_autoFireCoroutine != null)
+                StopCoroutine(_autoFireCoroutine);
+
+            _autoFireCoroutine = StartCoroutine(AutoFire());
+        }
+
+        private void StopShoot()
+        {
+            _isShooting = false;
+
+            if (_autoFireCoroutine != null)
+            {
+                StopCoroutine(_autoFireCoroutine);
+                _autoFireCoroutine = null;
+            }
+        }
+
+        private IEnumerator AutoFire()
+        {
+            while (_isShooting)
+            {
+                Debug.Log("Выстрел");
+                FireWeapon();
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+
+        private void FireWeapon()
+        {
+            if (_currentWeapon == null) return;
+
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, _currentWeapon.WeaponConfig.Range))
+            {
+                _currentWeapon.OnHit(hit);
+            }
+
+            /*// Weapon отвечает за свои эффекты
+            _currentWeapon.PlayMuzzleFlash();
+            _currentWeapon.PlaySound();
+            _currentWeapon.PlayWeaponAnimation();
+
+            // Анимация рук игрока
+            _playerAnimator?.SetTrigger("Fire");*/
         }
 
         private void Reload()
