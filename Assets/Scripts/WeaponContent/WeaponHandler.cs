@@ -82,7 +82,9 @@ namespace WeaponContent
             {
                 _currentWeapon.OnHit(hit);
             }
-
+            
+            _currentWeapon.PlayMuzzleFlash();
+            _currentWeapon.PlaySound();
             /*// Weapon отвечает за свои эффекты
             _currentWeapon.PlayMuzzleFlash();
             _currentWeapon.PlaySound();
