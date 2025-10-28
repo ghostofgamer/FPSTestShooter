@@ -63,8 +63,12 @@ public class HitHandler : MonoBehaviour
                 decal.gameObject.SetActive(true);
             }
 
+            Vector3 hitForce = hit.normal * force;
+            damageable.TakeDamage(damage, hitForce, hit.point);
+
             return;
         }
+
 
         if (hit.rigidbody != null)
         {

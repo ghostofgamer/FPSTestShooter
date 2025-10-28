@@ -65,9 +65,7 @@ namespace WeaponContent
         {
             while (_isShooting)
             {
-                Debug.Log("Выстрел");
                 FireWeapon();
-
                 yield return new WaitForSeconds(0.1f);
             }
         }

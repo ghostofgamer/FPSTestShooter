@@ -8,7 +8,6 @@ namespace DecalContent
 
         public void Init(Transform parent )
         {
-            Debug.Log("Init Decal Parent");
             Parent = parent;
         }
     }

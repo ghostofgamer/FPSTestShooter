@@ -1,7 +1,9 @@
+using UnityEngine;
+
 namespace Interfaces
 {
     public interface IDamageable
     {
-        public void TakeDamage(int amount);
+        void TakeDamage(int amount, Vector3 force, Vector3 hitPoint);
     }
 }

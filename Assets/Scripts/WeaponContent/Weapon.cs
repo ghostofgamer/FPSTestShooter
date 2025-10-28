@@ -25,17 +25,10 @@ namespace WeaponContent
             InitAmmo();
         }
 
-        private void InitAmmo()
-        {
-            _currentAmmoMagazine = _weaponConfig.AmmoMagazine;
-            AmmoChanged(_currentAmmoMagazine);
-        }
-
         public void OnHit(RaycastHit hit)
         {
             if (!HasAmmo()) return;
-
-            Debug.Log("hit " + hit.collider.gameObject.name);
+            
             _hitHandler.ProcessHit(hit, _weaponConfig.Damage, _weaponConfig.Force);
         }
 
@@ -53,6 +46,12 @@ namespace WeaponContent
         public void WeaponReload()
         {
             StartCoroutine(ReloadRoutine());
+        }
+
+        private void InitAmmo()
+        {
+            _currentAmmoMagazine = _weaponConfig.AmmoMagazine;
+            AmmoChanged(_currentAmmoMagazine);
         }
 
         private IEnumerator ReloadRoutine()
