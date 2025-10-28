@@ -15,5 +15,10 @@ namespace EnemyContent
         {
             _animator.enabled = false;
         }
+
+        public void PlayWalk(bool value)
+        {
+            _animator.SetBool("Walk", value);
+        }
     }
 }

@@ -42,7 +42,6 @@ public class HitHandler : MonoBehaviour
             for (int j = 0; j < count; j++)
             {
                 Decal newDecal = GameObject.Instantiate(prefabs[i], _decalContainer);
-                Debug.Log($"Spawned decal type: {newDecal.GetType().Name}");
                 newDecal.Init(_decalContainer);
                 newDecal.gameObject.SetActive(false);
                 pool.AddObject(newDecal);
