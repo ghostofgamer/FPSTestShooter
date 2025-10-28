@@ -15,5 +15,10 @@ namespace WeaponContent
         {
             _animator.SetFloat("MouseMoveAmount", value);
         }
+
+        public void PlayReload()
+        {
+            _animator.Play("Reload", -1, 0f);
+        }
     }
 }
