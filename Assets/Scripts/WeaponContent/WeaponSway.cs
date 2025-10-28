@@ -16,7 +16,7 @@ namespace WeaponContent
         [SerializeField] private float _xSwayMultiplier = 20f; 
         [SerializeField] private float _ySwayMultiplier = 10f; 
         [SerializeField] private float _zSwayMultiplier = 15f;
-         [SerializeField] private float _mouseMoveThreshold = 0.01f;
+        [SerializeField] private float _mouseMoveThreshold = 0.01f;
          
         private Vector3 _initialPosition;
         private Quaternion _initialRotation;
@@ -32,8 +32,6 @@ namespace WeaponContent
         {
             float mouseSpeed = Mathf.Clamp01(
                 (Mathf.Abs(_playerInput.MouseXValue) + Mathf.Abs(_playerInput.MouseYValue)) * 0.5f);
-            
-            Debug.Log(mouseSpeed);
 
             _weaponAnimator.PlayMoveIdleAnimation(mouseSpeed);
 
