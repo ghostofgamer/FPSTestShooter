@@ -12,22 +12,38 @@ namespace EnemyContent
         [SerializeField] private float _attackCooldown = 1f;
         [SerializeField] private int _damage = 10;
         [SerializeField] private EnemyAttack _enemyAttack;
+        [SerializeField] private EnemyAnimation _enemyAnimation;
+        [SerializeField] private EnemyHealthHandler _enemyHealthHandler;
 
         private NavMeshAgent _agent;
         private float _lastAttackTime;
-        private EnemyAnimation _enemyAnimation;
-        private IDamageable _playerHealth;
+
+        public IDamageable Player { get; private set; }
 
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _enemyAnimation = GetComponent<EnemyAnimation>();
-            _playerHealth = _player.GetComponent<IDamageable>();
+            Player = _player.GetComponent<IDamageable>();
+        }
+
+        private void OnEnable()
+        {
+            _enemyHealthHandler.Died += StopNavMesh;
+        }
+
+        private void OnDisable()
+        {
+            _enemyHealthHandler.Died -= StopNavMesh;
+        }
+
+        private void Start()
+        {
+            Player = _player.GetComponent<IDamageable>();
         }
 
         private void Update()
         {
-            if (_player == null) return;
+            if (_player == null || _enemyHealthHandler.IsDead) return;
 
             float distance = Vector3.Distance(transform.position, _player.position);
 
@@ -45,14 +61,26 @@ namespace EnemyContent
             }
         }
 
+        private void StopNavMesh()
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+        }
+
         private void TryAttack()
         {
             if (Time.time - _lastAttackTime < _attackCooldown) return;
 
             _lastAttackTime = Time.time;
-            _enemyAttack.Attack();
-            
-            _playerHealth?.TakeDamage(_damage, Vector3.zero, _player.position);
+            _enemyAnimation.PlayAttack();
+        }
+
+        public bool IsPlayerInAttackRange()
+        {
+            if (_player == null)
+                return false;
+
+            return Vector3.Distance(transform.position, _player.position) <= _attackRange;
         }
     }
 }

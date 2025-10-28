@@ -10,7 +10,8 @@ namespace HealthContent
         private bool _isDead = false;
 
         public event Action Died;
-        
+        public event Action<int, int> HealthChanged;
+
         public int CurrentHealth { get; private set; }
 
         private void Awake()
@@ -22,6 +23,7 @@ namespace HealthContent
         {
             CurrentHealth = currentHealth;
             _maxHealth = maxHealth;
+            HealthChanged?.Invoke(CurrentHealth, _maxHealth);
         }
 
         public void IncreaseHealth(int amount)
@@ -30,6 +32,8 @@ namespace HealthContent
 
             if (CurrentHealth > _maxHealth)
                 CurrentHealth = _maxHealth;
+
+            HealthChanged?.Invoke(CurrentHealth, _maxHealth);
         }
 
         public void DecreaseHealth(int damage)
@@ -39,12 +43,14 @@ namespace HealthContent
 
             CurrentHealth -= damage;
 
-            if (CurrentHealth < _minHealth)
+            if (CurrentHealth <= _minHealth)
             {
                 Died?.Invoke();
                 _isDead = true;
                 CurrentHealth = _minHealth;
             }
+
+            HealthChanged?.Invoke(CurrentHealth, _maxHealth);
         }
     }
 }

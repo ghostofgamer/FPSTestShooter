@@ -16,6 +16,9 @@ namespace PlayerContent
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            
+            xRotation = 0f;
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         }
 
         private void Update()

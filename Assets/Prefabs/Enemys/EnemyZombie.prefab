@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3634966047022616470}
   - component: {fileID: 3631459311879977710}
+  - component: {fileID: 3036711769425895512}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -87,6 +88,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3036711769425895512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178566907067418015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 578ecbaee21a1944a8ec04a627fd89b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 3631459311879977710}
 --- !u!1 &344821736722530902
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +239,6 @@ GameObject:
   - component: {fileID: 3655358120910532773}
   - component: {fileID: 3131226366107725095}
   - component: {fileID: 7937016480658020989}
-  - component: {fileID: 6804277861050779353}
   - component: {fileID: 8489050576744114190}
   - component: {fileID: 8665989103551077555}
   - component: {fileID: 7784147764881306800}
@@ -279,23 +292,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  _attackRange: 2
-  _attackCooldown: 1
+  _attackRange: 3
+  _attackCooldown: 3
   _damage: 10
   _enemyAttack: {fileID: 1534156436436458549}
---- !u!114 &6804277861050779353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042250750087737762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 578ecbaee21a1944a8ec04a627fd89b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 3631459311879977710}
+  _enemyAnimation: {fileID: 3036711769425895512}
+  _enemyHealthHandler: {fileID: 8489050576744114190}
 --- !u!114 &8489050576744114190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,8 +311,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 7784147764881306800}
-  _enemyAnimation: {fileID: 6804277861050779353}
+  _enemyAnimation: {fileID: 3036711769425895512}
   _ragdollHandler: {fileID: 8665989103551077555}
+  IsDead: 0
 --- !u!114 &8665989103551077555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d982c5f34f6cd54a8a3a8b343ba6473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyAnimation: {fileID: 3036711769425895512}
+  _enemyAI: {fileID: 7937016480658020989}
 --- !u!195 &4636604578101383875
 NavMeshAgent:
   m_ObjectHideFlags: 0

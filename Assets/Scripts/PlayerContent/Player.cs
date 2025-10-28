@@ -1,7 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace PlayerContent
 {
+    public class Player : MonoBehaviour
+    {
+        [SerializeField]private PlayerLook _playerLook;
+        /*[SerializeField]private PlayerInput _playerInput;
+        [SerializeField]private PlayerMovement _playerMovement;
+        [SerializeField]private PlayerLifeSystem _playerLifeSystem;*/
+    }
 }

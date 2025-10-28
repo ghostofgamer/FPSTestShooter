@@ -70,10 +70,7 @@ public class HitHandler : MonoBehaviour
 
 
         if (hit.rigidbody != null)
-        {
-            Debug.Log("hit " + hit.collider.gameObject.name);
             hit.rigidbody.AddForce(-hit.normal * force);
-        }
 
         if (hit.collider.TryGetComponent(out Environment environment))
         {

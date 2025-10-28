@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace EnemyContent
@@ -6,6 +7,8 @@ namespace EnemyContent
     {
         [SerializeField] private Animator _animator;
 
+        public event Action AttackHitEvent;
+        
         public void EnableAnimator()
         {
             _animator.enabled = true;
@@ -19,6 +22,16 @@ namespace EnemyContent
         public void PlayWalk(bool value)
         {
             _animator.SetBool("Walk", value);
+        }
+
+        public void PlayAttack()
+        {
+            _animator.Play("Attack", -1, 0f);
+        }
+        
+        public void OnAttackHit()
+        {
+            AttackHitEvent?.Invoke();
         }
     }
 }
