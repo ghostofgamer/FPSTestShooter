@@ -10,17 +10,25 @@ namespace WaveContent
         [SerializeField] private WaveConfig[] _waves;
         [SerializeField] private Spawner _spawner;
 
-        private int _currentWaveIndex = 0;
         private Coroutine _waveCoroutine;
 
         public event Action<int, int> ProgressChanged;
         public event Action<float> OnCountdownTick;
-        public event Action OnWaveStarted;
+        public event Action<int> OnWaveStarted;
+        public event Action AllWavesCompleted;
 
-        public bool WaveSpawned;
+        public int CurrentWaveIndex{ get; private set; }
+        public bool WaveSpawned { get; private set; }
         
         public void StartNextWave()
         {
+            if (CurrentWaveIndex >= _waves.Length)
+            {
+                AllWavesCompleted?.Invoke();
+                Debug.Log("Все волны завершены!");
+                return;
+            }
+            
             if (_waveCoroutine != null)
                 StopCoroutine(_waveCoroutine);
 
@@ -33,7 +41,7 @@ namespace WaveContent
             int spawned = 0;
             int totalEnemies = 0;
 
-            var wave = _waves[_currentWaveIndex];
+            var wave = _waves[CurrentWaveIndex];
 
             foreach (var entry in wave.Enemies)
                 totalEnemies += entry.Count;
@@ -49,7 +57,7 @@ namespace WaveContent
                 timer -= 1f;
             }
             
-            OnWaveStarted?.Invoke();
+            OnWaveStarted?.Invoke(totalEnemies);
             
             foreach (var entry in wave.Enemies)
             {
@@ -64,11 +72,7 @@ namespace WaveContent
             }
 
             WaveSpawned = true;
-            
-            _currentWaveIndex++;
-
-            if (_currentWaveIndex >= _waves.Length)
-                Debug.Log("Все волны завершены!");
+            CurrentWaveIndex++;
         }
     }
 }

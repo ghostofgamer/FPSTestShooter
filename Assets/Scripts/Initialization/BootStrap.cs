@@ -16,8 +16,9 @@ namespace Initialization
         [SerializeField] private PlayerLook _playerLook;
         [SerializeField] private EnemyPools _enemyPools;
         [SerializeField] private LoadingScreen _loadingScreen;
-        
-        [SerializeField]private WaveActivator _waveActivator;
+        [SerializeField] private WinnerScreen _winnerScreen;
+        [SerializeField] private WaveSequence _waveSequence;
+        [SerializeField] private WaveActivator _waveActivator;
 
         private void Awake()
         {
@@ -26,6 +27,7 @@ namespace Initialization
 
         private void Initialization()
         {
+            Time.timeScale = 1;
             StartCoroutine(InitGame());
         }
 
@@ -41,7 +43,7 @@ namespace Initialization
 
             yield return null;
             _player.gameObject.SetActive(true);
-            _gameSession.Init(_gameOverScreen, _playerLifeSystem);
+            _gameSession.Init(_gameOverScreen, _playerLifeSystem, _waveSequence, _winnerScreen);
 
             _loadingScreen.SetProgress(0.6f);
 
@@ -51,8 +53,8 @@ namespace Initialization
 
             yield return _loadingScreen.FadeOut();
             _playerLook.enabled = true;
-            
-            
+
+
             _waveActivator.ActivateWave();
         }
     }

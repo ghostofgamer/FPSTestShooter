@@ -10,8 +10,10 @@ namespace WaveContent
         [SerializeField] private WaveSequence _waveSequence;
 
         private List<EnemyAI> _enemies = new List<EnemyAI>();
+        private int _currentEnemyAmount;
 
         public event Action WaveCleared;
+        public event Action<int> EnemyAmountChanged;
 
         private void OnEnable()
         {
@@ -23,8 +25,9 @@ namespace WaveContent
             _waveSequence.OnWaveStarted -= SetupWave;
         }
 
-        private void SetupWave()
+        private void SetupWave(int amount)
         {
+            _currentEnemyAmount = amount;
             Clear();
         }
 
@@ -45,6 +48,9 @@ namespace WaveContent
             enemyAI.EnemyHealthHandler.Died -= DeleteEnemy;
             _enemies.Remove(enemyAI);
 
+            _currentEnemyAmount--;
+            EnemyAmountChanged?.Invoke(_currentEnemyAmount);
+            
             if (_waveSequence.WaveSpawned && _enemies.Count <= 0)
             {
                 WaveCleared?.Invoke();
