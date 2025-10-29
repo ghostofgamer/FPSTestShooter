@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemies:
   - Type: 1
-    Count: 5
+    Count: 1
   - Type: 2
-    Count: 5
+    Count: 1
   _spawnInterval: 1
   _startDelay: 1
   _endDelay: 1

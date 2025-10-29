@@ -78,14 +78,12 @@ namespace WeaponContent
 
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             _currentWeapon.Shoot();
-            
+
             float range = _currentWeapon.WeaponConfig.Range;
             int layerMaskForRaycast = ~_ignoreMask;
-            
+
             if (Physics.Raycast(ray, out RaycastHit hit, range, layerMaskForRaycast, QueryTriggerInteraction.Ignore))
-            {
                 _currentWeapon.OnHit(hit);
-            }
         }
 
         private void Reload()

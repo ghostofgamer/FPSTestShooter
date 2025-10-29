@@ -1,3 +1,4 @@
+using System.Collections;
 using PlayerContent;
 using UI.Screens;
 using UnityEngine;
@@ -37,6 +38,19 @@ public class GameSession : MonoBehaviour
 
     private void OnWinGame()
     {
+        if (_playerLifeSystem.Health.IsDead)
+        {
+            OnPlayerDead();
+            return;
+        }
+
+        StartCoroutine(DelayedWinScreen());
+    }
+
+    private IEnumerator DelayedWinScreen()
+    {
+        yield return new WaitForSeconds(0.3f);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0;

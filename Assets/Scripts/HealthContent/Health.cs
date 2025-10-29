@@ -8,11 +8,11 @@ namespace HealthContent
     {
         private int _maxHealth = 100;
         private int _minHealth = 0;
-        private bool _isDead = false;
 
         public event Action Died;
         public event Action<int, int> HealthChanged;
 
+        public bool IsDead { get; private set; }= false;
         public int CurrentHealth { get; private set; }
 
         private void Awake()
@@ -39,7 +39,7 @@ namespace HealthContent
 
         private void DecreaseHealth(int damage)
         {
-            if (_isDead)
+            if (IsDead)
                 return;
 
             CurrentHealth -= damage;
@@ -47,7 +47,7 @@ namespace HealthContent
             if (CurrentHealth <= _minHealth)
             {
                 Died?.Invoke();
-                _isDead = true;
+                IsDead = true;
                 CurrentHealth = _minHealth;
             }
 
@@ -56,13 +56,12 @@ namespace HealthContent
 
         public void Reset()
         {
-            _isDead = false;
+            IsDead = false;
             Init(100, 100);
         }
 
         public void TakeDamage(int amount, Vector3 force, Vector3 hitPoint)
         {
-            Debug.Log("TakeDamage" + amount);
             DecreaseHealth(amount);
         }
     }

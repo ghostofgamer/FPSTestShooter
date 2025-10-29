@@ -8,6 +8,8 @@ namespace PlayerContent
     {
         [SerializeField] private Health _health;
 
+        public Health Health=>_health;
+        
         public event Action PlayerDied;
         
         private void OnEnable()
