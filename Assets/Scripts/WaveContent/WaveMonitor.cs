@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WaveContent
 {
-    public class EnemyWaveCounter : MonoBehaviour
+    public class WaveMonitor : MonoBehaviour
     {
         [SerializeField] private WaveSequence _waveSequence;
 

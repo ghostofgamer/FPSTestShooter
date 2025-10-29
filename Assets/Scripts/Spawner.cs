@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private EnemyPools _enemyPools;
     [SerializeField] private Player _player;
-    [SerializeField] private EnemyWaveCounter _enemyWaveCounter;
+    [SerializeField] private WaveMonitor waveMonitor;
 
     private int _currentWaveIndex = 0;
 
@@ -29,8 +29,8 @@ public class Spawner : MonoBehaviour
         {
             enemyAI.Init(_player.transform);
 
-            if (_enemyWaveCounter != null)
-                _enemyWaveCounter.AddEnemy(enemyAI);
+            if (waveMonitor != null)
+                waveMonitor.AddEnemy(enemyAI);
         }
     }
 }
