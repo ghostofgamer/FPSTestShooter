@@ -51,7 +51,7 @@ public class HitHandler : MonoBehaviour
 
     public void ProcessHit(RaycastHit hit, int damage, float force)
     {
-        if (hit.transform.TryGetComponent(out IDamageable damageable))
+        if (hit.transform.TryGetComponent(out HitPosition hitPosition))
         {
             if (_effectsPools["BloodHit"]
                 .TryGetObject(out Decal decal, _bloodHitEffects[Random.Range(0, _bloodHitEffects.Length)]))
@@ -63,7 +63,7 @@ public class HitHandler : MonoBehaviour
             }
 
             Vector3 hitForce = hit.normal * force;
-            damageable.TakeDamage(damage, hitForce, hit.point);
+            hitPosition.TakeDamage(damage, hitForce, hit.point);
 
             return;
         }

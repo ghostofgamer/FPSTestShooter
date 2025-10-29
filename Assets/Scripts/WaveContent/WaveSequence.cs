@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Enums;
 using SOContent.Waves;
 using UnityEngine;
 
@@ -43,9 +45,9 @@ namespace WaveContent
 
             var wave = _waves[CurrentWaveIndex];
 
-            foreach (var entry in wave.Enemies)
-                totalEnemies += entry.Count;
-
+            List<EnemyType> shuffledEnemies = wave.GetShuffledEnemyList();
+            totalEnemies = shuffledEnemies.Count;
+            
             ProgressChanged?.Invoke(spawned, totalEnemies);
 
             float timer = wave.StartDelay;
@@ -59,16 +61,12 @@ namespace WaveContent
             
             OnWaveStarted?.Invoke(totalEnemies);
             
-            foreach (var entry in wave.Enemies)
+            foreach (var enemyType in shuffledEnemies)
             {
-                for (int i = 0; i < entry.Count; i++)
-                {
-                    _spawner.SpawnEnemy(entry.Type);
-                    spawned++;
-                    ProgressChanged?.Invoke(spawned, totalEnemies);
-
-                    yield return new WaitForSeconds(wave.SpawnInterval);
-                }
+                _spawner.SpawnEnemy(enemyType);
+                spawned++;
+                ProgressChanged?.Invoke(spawned, totalEnemies);
+                yield return new WaitForSeconds(wave.SpawnInterval);
             }
 
             WaveSpawned = true;

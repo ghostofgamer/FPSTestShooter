@@ -4,11 +4,30 @@ using UnityEngine;
 
 public class RagdollHandler : MonoBehaviour
 {
+    private List<Collider> _hitColliders;
     private List<Rigidbody> _rigidbodies;
+
+    private List<Vector3> _originalPositions;
+    private List<Quaternion> _originalRotations;
+
+    private bool _isRagdollInitialized;
 
     public void Initialize()
     {
         _rigidbodies = new List<Rigidbody>(GetComponentsInChildren<Rigidbody>());
+        
+        if (!_isRagdollInitialized)
+        {
+            _hitColliders = _rigidbodies
+                .SelectMany(rb => rb.GetComponentsInChildren<Collider>())
+                .Where(c => c.GetComponent<HitPosition>() != null)
+                .ToList();
+
+            _originalPositions = _rigidbodies.Select(rb => rb.transform.localPosition).ToList();
+            _originalRotations = _rigidbodies.Select(rb => rb.transform.localRotation).ToList();
+            _isRagdollInitialized = true;
+        }
+
         DisableRagdoll();
     }
 
@@ -29,9 +48,17 @@ public class RagdollHandler : MonoBehaviour
             rb.isKinematic = false;
     }
 
-    private void DisableRagdoll()
+    public void DisableRagdoll()
     {
-        foreach (Rigidbody rb in _rigidbodies)
-            rb.isKinematic = true;
+        /*foreach (Rigidbody rb in _rigidbodies)
+            rb.isKinematic = true;*/
+
+        for (int i = 0; i < _rigidbodies.Count; i++)
+        {
+            _rigidbodies[i].isKinematic = true;
+
+            _rigidbodies[i].transform.localPosition = _originalPositions[i];
+            _rigidbodies[i].transform.localRotation = _originalRotations[i];
+        }
     }
 }

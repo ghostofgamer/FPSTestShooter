@@ -244,7 +244,8 @@ GameObject:
   - component: {fileID: 7784147764881306800}
   - component: {fileID: 1534156436436458549}
   - component: {fileID: 4636604578101383875}
-  m_Layer: 0
+  - component: {fileID: 340958235221700658}
+  m_Layer: 8
   m_Name: EnemyZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,6 +374,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &340958235221700658
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042250750087737762}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 2.0668697
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.1632211, z: 0}
 --- !u!1 &1209907392587399353
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.5
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &1529982915412698046
@@ -888,7 +911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.65
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &2834145584063497037
@@ -1195,7 +1217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.65
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &3172100115603758176
@@ -2082,7 +2103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.65
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &5252220354913400311
@@ -2322,7 +2342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 1
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &6575775542679794760
@@ -2502,7 +2521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.65
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &6673383636812245259
@@ -2678,7 +2696,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 2
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &6857228571642764497
@@ -2841,7 +2858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 1
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &7910008684237375945
@@ -2988,7 +3004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.5
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &8378993726723595722
@@ -3232,7 +3247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.5
   _ragdollHandler: {fileID: 8665989103551077555}
 --- !u!1 &8881176077319616376
@@ -3443,6 +3457,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80928ec109ef6fa45aa12a3a31e43046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7784147764881306800}
   _damageMultiplier: 0.5
   _ragdollHandler: {fileID: 8665989103551077555}

@@ -17,6 +17,28 @@ namespace SOContent.Waves
         public float SpawnInterval => _spawnInterval;
         public float StartDelay => _startDelay;
         public float EndDelay => _endDelay;
+
+        public List<EnemyType> GetShuffledEnemyList()
+        {
+            List<EnemyType> list = new List<EnemyType>();
+            foreach (var entry in _enemies)
+            {
+                for (int i = 0; i < entry.Count; i++)
+                {
+                    list.Add(entry.Type);
+                }
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                int randomIndex = UnityEngine.Random.Range(i, list.Count);
+                EnemyType temp = list[i];
+                list[i] = list[randomIndex];
+                list[randomIndex] = temp;
+            }
+
+            return list;
+        }
     }
 
     [Serializable]

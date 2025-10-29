@@ -1,11 +1,10 @@
 using System;
 using HealthContent;
-using Interfaces;
 using UnityEngine;
 
 namespace PlayerContent
 {
-    public class PlayerLifeSystem : MonoBehaviour, IDamageable
+    public class PlayerLifeSystem : MonoBehaviour
     {
         [SerializeField] private Health _health;
 
@@ -19,11 +18,6 @@ namespace PlayerContent
         private void OnDisable()
         {
             _health.Died -= OnDie;
-        }
-
-        public void TakeDamage(int amount, Vector3 force, Vector3 hitPoint)
-        {
-            _health.DecreaseHealth(amount);
         }
 
         private void OnDie()

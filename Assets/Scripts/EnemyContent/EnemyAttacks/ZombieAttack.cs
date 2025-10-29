@@ -20,13 +20,9 @@ namespace EnemyContent.EnemyAttacks
         public override void Attack()
         {
             if (_enemyAI.IsPlayerInAttackRange())
-            {
                 _enemyAI.Player.TakeDamage(10, Vector3.zero, _enemyAI.transform.position);
-            }
             else
-            {
                 Debug.Log("Удар промахнулся — игрок слишком далеко");
-            }
         }
     }
 }

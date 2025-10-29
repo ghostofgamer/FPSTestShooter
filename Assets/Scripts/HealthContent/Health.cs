@@ -1,9 +1,10 @@
 using System;
+using Interfaces;
 using UnityEngine;
 
 namespace HealthContent
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, IDamageable
     {
         private int _maxHealth = 100;
         private int _minHealth = 0;
@@ -36,7 +37,7 @@ namespace HealthContent
             HealthChanged?.Invoke(CurrentHealth, _maxHealth);
         }
 
-        public void DecreaseHealth(int damage)
+        private void DecreaseHealth(int damage)
         {
             if (_isDead)
                 return;
@@ -51,6 +52,18 @@ namespace HealthContent
             }
 
             HealthChanged?.Invoke(CurrentHealth, _maxHealth);
+        }
+
+        public void Reset()
+        {
+            _isDead = false;
+            Init(100, 100);
+        }
+
+        public void TakeDamage(int amount, Vector3 force, Vector3 hitPoint)
+        {
+            Debug.Log("TakeDamage" + amount);
+            DecreaseHealth(amount);
         }
     }
 }

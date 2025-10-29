@@ -13,6 +13,7 @@ namespace WeaponContent
         [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private Transform _weaponPosDefault;
         [SerializeField] private Transform _weaponPosAiming;
+        [SerializeField] private LayerMask _ignoreMask;
         [Header("Settings")]
         [SerializeField]private float _aimTransitionTime = 0.3f;
 // @formatter:on
@@ -77,9 +78,14 @@ namespace WeaponContent
 
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             _currentWeapon.Shoot();
-
-            if (Physics.Raycast(ray, out RaycastHit hit, _currentWeapon.WeaponConfig.Range))
+            
+            float range = _currentWeapon.WeaponConfig.Range;
+            int layerMaskForRaycast = ~_ignoreMask;
+            
+            if (Physics.Raycast(ray, out RaycastHit hit, range, layerMaskForRaycast, QueryTriggerInteraction.Ignore))
+            {
                 _currentWeapon.OnHit(hit);
+            }
         }
 
         private void Reload()
