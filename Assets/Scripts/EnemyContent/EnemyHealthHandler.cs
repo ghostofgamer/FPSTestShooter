@@ -9,11 +9,12 @@ namespace EnemyContent
         [SerializeField] private Health _health;
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private RagdollHandler _ragdollHandler;
+        [SerializeField] private EnemyAI _enemyAI;
 
         public bool IsDead => _health.CurrentHealth <= 0;
 
-        public event Action Died;
-        
+        public event Action<EnemyAI> Died;
+
         private void Awake()
         {
             _ragdollHandler.Initialize();
@@ -31,7 +32,7 @@ namespace EnemyContent
 
         private void OnDie()
         {
-            Died?.Invoke();
+            Died?.Invoke(_enemyAI);
             _enemyAnimation.DisableAnimator();
             _ragdollHandler.EnableRagdoll();
         }

@@ -7,7 +7,6 @@ namespace EnemyContent
 {
     public class EnemyAI : MonoBehaviour
     {
-        [SerializeField] private Transform _player;
         [SerializeField] private float _attackRange = 2f;
         [SerializeField] private float _attackCooldown = 1f;
         [SerializeField] private int _damage = 10;
@@ -15,15 +14,18 @@ namespace EnemyContent
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private EnemyHealthHandler _enemyHealthHandler;
 
+        private Transform _player;
         private NavMeshAgent _agent;
         private float _lastAttackTime;
 
+        public EnemyHealthHandler EnemyHealthHandler => _enemyHealthHandler;
         public IDamageable Player { get; private set; }
 
-        private void Awake()
+        public void Init(Transform Player)
         {
+            _player = Player;
             _agent = GetComponent<NavMeshAgent>();
-            Player = _player.GetComponent<IDamageable>();
+            this.Player = _player.GetComponent<IDamageable>();
         }
 
         private void OnEnable()
@@ -34,11 +36,6 @@ namespace EnemyContent
         private void OnDisable()
         {
             _enemyHealthHandler.Died -= StopNavMesh;
-        }
-
-        private void Start()
-        {
-            Player = _player.GetComponent<IDamageable>();
         }
 
         private void Update()
@@ -61,7 +58,7 @@ namespace EnemyContent
             }
         }
 
-        private void StopNavMesh()
+        private void StopNavMesh(EnemyAI enemyAI)
         {
             _agent.isStopped = true;
             _agent.ResetPath();

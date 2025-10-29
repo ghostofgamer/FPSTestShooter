@@ -15,7 +15,7 @@ namespace ObjectPoolContent
             Initialize(count, prefab);
         }
 
-        public bool AutoExpand { get; private set; }
+        public bool AutoExpand { get; private set; } = true;
 
         public bool TryGetObject(out T spawned, T prefabs)
         {

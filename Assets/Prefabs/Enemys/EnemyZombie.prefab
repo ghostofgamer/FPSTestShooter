@@ -291,7 +291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c500a217ce6da499c7fd932dbd7f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
   _attackRange: 3
   _attackCooldown: 3
   _damage: 10
@@ -313,7 +312,7 @@ MonoBehaviour:
   _health: {fileID: 7784147764881306800}
   _enemyAnimation: {fileID: 3036711769425895512}
   _ragdollHandler: {fileID: 8665989103551077555}
-  IsDead: 0
+  _enemyAI: {fileID: 7937016480658020989}
 --- !u!114 &8665989103551077555
 MonoBehaviour:
   m_ObjectHideFlags: 0

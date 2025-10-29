@@ -21,7 +21,6 @@ namespace EnemyContent.EnemyAttacks
         {
             if (_enemyAI.IsPlayerInAttackRange())
             {
-                Debug.Log("Удар ");
                 _enemyAI.Player.TakeDamage(10, Vector3.zero, _enemyAI.transform.position);
             }
             else
