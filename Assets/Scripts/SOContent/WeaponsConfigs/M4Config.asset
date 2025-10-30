@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: M4Config
   m_EditorClassIdentifier: 
   _range: 100
-  _damage: 30
+  _damage: 15
   _fireRate: 0.1
   _force: 60
   _ammoMagazine: 30

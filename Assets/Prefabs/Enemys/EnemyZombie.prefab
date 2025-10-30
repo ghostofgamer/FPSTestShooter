@@ -294,7 +294,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackRange: 3
   _attackCooldown: 3
-  _damage: 10
   _enemyAttack: {fileID: 1534156436436458549}
   _enemyAnimation: {fileID: 3036711769425895512}
   _enemyHealthHandler: {fileID: 8489050576744114190}
@@ -338,6 +337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e69a73dbefc9b14cb02086162d29dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 35
+  _minHealth: 0
 --- !u!114 &1534156436436458549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +363,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1.65
+  m_Speed: 2.3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

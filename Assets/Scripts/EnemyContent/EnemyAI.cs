@@ -9,7 +9,6 @@ namespace EnemyContent
     {
         [SerializeField] private float _attackRange = 2f;
         [SerializeField] private float _attackCooldown = 1f;
-        [SerializeField] private int _damage = 10;
         [SerializeField] private EnemyAttack _enemyAttack;
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private EnemyHealthHandler _enemyHealthHandler;

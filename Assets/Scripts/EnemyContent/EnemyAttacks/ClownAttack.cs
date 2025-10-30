@@ -47,8 +47,10 @@ namespace EnemyContent.EnemyAttacks
             {
                 if (collider.TryGetComponent<IDamageable>(out var damageable))
                 {
-                    Debug.Log("Урон нанес взрывом " + damageable.GetType().Name);
-
+                    string objectName = (damageable as Component)?.gameObject.name ?? "Unknown";
+                    // Debug.Log("Урон нанес взрывом " + damageable.GetType().Name);
+                    Debug.Log($"Урон нанес взрывом: {damageable.GetType().Name} на объекте {objectName}");
+                    
                     Vector3 force = (collider.transform.position - transform.position).normalized * 5f;
                     damageable.TakeDamage(_damage, force, transform.position);
                 }

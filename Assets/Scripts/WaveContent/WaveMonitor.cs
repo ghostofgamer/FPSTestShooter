@@ -50,12 +50,9 @@ namespace WaveContent
 
             _currentEnemyAmount--;
             EnemyAmountChanged?.Invoke(_currentEnemyAmount);
-            
+
             if (_waveSequence.WaveSpawned && _enemies.Count <= 0)
-            {
                 WaveCleared?.Invoke();
-                Debug.Log("Убил всех молодец");
-            }
         }
 
         private void Clear()

@@ -6,21 +6,16 @@ namespace HealthContent
 {
     public class Health : MonoBehaviour, IDamageable
     {
-        private int _maxHealth = 100;
-        private int _minHealth = 0;
+        [SerializeField] private int _maxHealth = 100;
+        [SerializeField] private int _minHealth = 0;
 
         public event Action Died;
         public event Action<int, int> HealthChanged;
 
-        public bool IsDead { get; private set; }= false;
+        public bool IsDead { get; private set; } = false;
         public int CurrentHealth { get; private set; }
 
-        private void Awake()
-        {
-            Init(100, 100);
-        }
-
-        public void Init(int currentHealth, int maxHealth)
+        private void Init(int currentHealth, int maxHealth)
         {
             CurrentHealth = currentHealth;
             _maxHealth = maxHealth;
@@ -43,6 +38,10 @@ namespace HealthContent
                 return;
 
             CurrentHealth -= damage;
+            
+            Debug.Log("Damaged " + gameObject.name + " to " + damage);
+            Debug.Log("CurrentHealth " + gameObject.name + " to " + CurrentHealth);
+            Debug.Log("_minHealth " + gameObject.name + " to " + _minHealth);
 
             if (CurrentHealth <= _minHealth)
             {
@@ -57,7 +56,7 @@ namespace HealthContent
         public void Reset()
         {
             IsDead = false;
-            Init(100, 100);
+            Init(_maxHealth, _maxHealth);
         }
 
         public void TakeDamage(int amount, Vector3 force, Vector3 hitPoint)

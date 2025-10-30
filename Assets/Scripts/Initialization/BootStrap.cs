@@ -42,6 +42,7 @@ namespace Initialization
             _loadingScreen.SetProgress(0.4f);
 
             yield return null;
+            _playerLifeSystem.Health.Reset();
             _player.gameObject.SetActive(true);
             _gameSession.Init(_gameOverScreen, _playerLifeSystem, _waveSequence, _winnerScreen);
 

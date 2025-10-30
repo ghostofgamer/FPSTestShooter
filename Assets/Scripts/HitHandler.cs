@@ -34,15 +34,11 @@ public class HitHandler : MonoBehaviour
 
         _effectsPools[key] = pool;
 
-        foreach (var decal in _decalContainer.GetComponentsInChildren<Decal>(true))
-            decal.Init(_decalContainer);
-
         for (int i = 1; i < prefabs.Length; i++)
         {
             for (int j = 0; j < count; j++)
             {
                 Decal newDecal = GameObject.Instantiate(prefabs[i], _decalContainer);
-                newDecal.Init(_decalContainer);
                 newDecal.gameObject.SetActive(false);
                 pool.AddObject(newDecal);
             }
@@ -79,7 +75,6 @@ public class HitHandler : MonoBehaviour
             if (_effectsPools[poolKey].TryGetObject(out Decal impactDecal,
                     environment.IsStone ? _decalEffectStone : _decalEffectMetall))
             {
-                impactDecal.transform.SetParent(hit.transform);
                 impactDecal.transform.position = hit.point;
                 impactDecal.transform.rotation = Quaternion.LookRotation(hit.normal);
                 impactDecal.transform.Translate(impactDecal.transform.forward * 0.01f, Space.World);

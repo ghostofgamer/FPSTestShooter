@@ -20,6 +20,7 @@ namespace EnemyContent
 
         private void Awake()
         {
+            _health.Reset();
             _ragdollHandler.Initialize();
         }
 

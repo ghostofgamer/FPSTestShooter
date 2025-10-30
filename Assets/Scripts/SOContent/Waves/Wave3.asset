@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Wave3
   m_EditorClassIdentifier: 
   _enemies:
-  - Type: 1
-    Count: 1
   - Type: 2
+    Count: 1
+  - Type: 1
     Count: 1
   _spawnInterval: 1
   _startDelay: 1

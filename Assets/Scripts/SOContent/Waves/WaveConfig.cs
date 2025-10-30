@@ -18,6 +18,14 @@ namespace SOContent.Waves
         public float StartDelay => _startDelay;
         public float EndDelay => _endDelay;
 
+        public void Initialize(List<EnemyEntry> enemies, float spawnInterval, float startDelay, float endDelay)
+        {
+            _enemies = enemies;
+            _spawnInterval = spawnInterval;
+            _startDelay = startDelay;
+            _endDelay = endDelay;
+        }
+        
         public List<EnemyType> GetShuffledEnemyList()
         {
             List<EnemyType> list = new List<EnemyType>();

@@ -11,16 +11,6 @@ public class HitPosition : MonoBehaviour
     private void Start()
     {
         _damageable = GetComponentInParent<IDamageable>();
-
-        if (_damageable == null)
-        {
-            Debug.LogError(
-                $"[HitPosition] У объекта {name} не найден компонент, реализующий IDamageable, среди родителей!");
-        }
-        else
-        {
-            Debug.Log("_damageable.GetType().Name " + _damageable.GetType().Name);
-        }
     }
 
     public void TakeDamage(int amount, Vector3 force, Vector3 hitPoint)
