@@ -47,7 +47,6 @@ namespace WaveContent
 
             enemyAI.EnemyHealthHandler.Died -= DeleteEnemy;
             _enemies.Remove(enemyAI);
-
             _currentEnemyAmount--;
             EnemyAmountChanged?.Invoke(_currentEnemyAmount);
 

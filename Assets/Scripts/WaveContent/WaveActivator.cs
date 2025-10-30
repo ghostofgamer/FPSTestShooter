@@ -19,7 +19,6 @@ namespace WaveContent
 
         public void ActivateWave()
         {
-            Debug.Log("Activate Wave");
             _waveSequence.StartNextWave();
         }
     }

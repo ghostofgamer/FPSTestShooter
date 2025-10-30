@@ -9,14 +9,24 @@ namespace WaveContent
 {
     public class WaveSequence : MonoBehaviour
     {
-        [SerializeField] private WaveConfig[] _waves;
+// @formatter:off
+        [Header("References")]
         [SerializeField] private WaveConfig _baseWave;
         [SerializeField] private Spawner _spawner;
+        [Header("Settings")]
         [SerializeField] private float _growthFactor = 1.5f;
         [SerializeField] private float _spawnSpeedup = 0.95f;
         [SerializeField] private int _maxEnemiesCap = 500;
+// @formatter:on
 
         private Coroutine _waveCoroutine;
+        private WaitForSeconds _waitForSecond = new WaitForSeconds(1f);
+        private WaitForSeconds _waitForSecondWave;
+        private int _spawned;
+        private int _totalEnemies;
+        private float _timer;
+        private float _countdownTick = 1f;
+        private float _minSpawnInterval = 0.2f;
 
         public event Action<int, int> ProgressChanged;
         public event Action<float> OnCountdownTick;
@@ -36,68 +46,55 @@ namespace WaveContent
 
         private IEnumerator RunWaves()
         {
-            Debug.Log($"Старт волны #{CurrentWaveIndex + 1}");
-          
             WaveSpawned = false;
-            
-            WaveConfig wave = GenerateScaledWave(CurrentWaveIndex); 
-            
-            int spawned = 0;
-            int totalEnemies = 0;
+            WaveConfig wave = GenerateScaledWave(CurrentWaveIndex);
+            _spawned = 0;
+            _totalEnemies = 0;
             List<EnemyType> shuffledEnemies = wave.GetShuffledEnemyList();
-            totalEnemies = shuffledEnemies.Count;
-            ProgressChanged?.Invoke(spawned, totalEnemies);
-            float timer = wave.StartDelay;
+            _totalEnemies = shuffledEnemies.Count;
+            ProgressChanged?.Invoke(_spawned, _totalEnemies);
+            _timer = wave.StartDelay;
 
-            while (timer > 0)
+            while (_timer > 0)
             {
-                OnCountdownTick?.Invoke(timer);
-                yield return new WaitForSeconds(1f);
-                timer -= 1f;
+                OnCountdownTick?.Invoke(_timer);
+                yield return _waitForSecond;
+                _timer -= _countdownTick;
             }
 
-            OnWaveStarted?.Invoke(totalEnemies);
+            OnWaveStarted?.Invoke(_totalEnemies);
+            _waitForSecondWave = new WaitForSeconds(wave.SpawnInterval);
 
             foreach (var enemyType in shuffledEnemies)
             {
                 _spawner.SpawnEnemy(enemyType);
-                spawned++;
+                _spawned++;
 
-                if (spawned >= totalEnemies)
+                if (_spawned >= _totalEnemies)
                     WaveSpawned = true;
 
-                ProgressChanged?.Invoke(spawned, totalEnemies);
-                yield return new WaitForSeconds(wave.SpawnInterval);
+                ProgressChanged?.Invoke(_spawned, _totalEnemies);
+                yield return _waitForSecondWave;
             }
-            
+
             CurrentWaveIndex++;
         }
-        
+
         private WaveConfig GenerateScaledWave(int waveIndex)
         {
             WaveConfig newWave = ScriptableObject.CreateInstance<WaveConfig>();
-            
             var enemyList = new List<EnemyEntry>();
-            
+
             foreach (var e in _baseWave.Enemies)
             {
-                int scaledCount = Mathf.Min(
-                    Mathf.CeilToInt(e.Count * Mathf.Pow(_growthFactor, waveIndex)),
-                    _maxEnemiesCap
-                );
-
-                enemyList.Add(new EnemyEntry
-                {
-                    Type = e.Type,
-                    Count = scaledCount
-                });
+                int scaledCount = Mathf.Min(Mathf.CeilToInt(e.Count * Mathf.Pow(_growthFactor, waveIndex)),
+                    _maxEnemiesCap);
+                enemyList.Add(new EnemyEntry { Type = e.Type, Count = scaledCount });
             }
-            
-            float scaledSpawnInterval = Mathf.Max(
-                _baseWave.SpawnInterval * Mathf.Pow(_spawnSpeedup, waveIndex),
-                0.2f
-            );
-            
+
+            float scaledSpawnInterval = Mathf.Max(_baseWave.SpawnInterval * Mathf.Pow(_spawnSpeedup, waveIndex),
+                _minSpawnInterval);
+
             newWave.Initialize(
                 enemyList,
                 scaledSpawnInterval,

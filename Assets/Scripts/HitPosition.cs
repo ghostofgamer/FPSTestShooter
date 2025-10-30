@@ -7,6 +7,8 @@ public class HitPosition : MonoBehaviour
     [SerializeField] private RagdollHandler _ragdollHandler;
 
     private IDamageable _damageable;
+    private int _finalDamage;
+    private int _forceFactor = 3;
 
     private void Start()
     {
@@ -15,10 +17,10 @@ public class HitPosition : MonoBehaviour
 
     public void TakeDamage(int amount, Vector3 force, Vector3 hitPoint)
     {
-        int finalDamage = Mathf.RoundToInt(amount * _damageMultiplier);
-        _damageable.TakeDamage(finalDamage, force, hitPoint);
-        
+        _finalDamage = Mathf.RoundToInt(amount * _damageMultiplier);
+        _damageable.TakeDamage(_finalDamage, force, hitPoint);
+
         if (_ragdollHandler != null)
-            _ragdollHandler?.Hit(-force * 3, hitPoint);
+            _ragdollHandler?.Hit(-force * _forceFactor, hitPoint);
     }
 }

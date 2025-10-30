@@ -19,6 +19,9 @@ namespace Initialization
         [SerializeField] private WinnerScreen _winnerScreen;
         [SerializeField] private WaveSequence _waveSequence;
         [SerializeField] private WaveActivator _waveActivator;
+        
+        private Coroutine _coroutine;
+        private WaitForSeconds _waitForSeconds = new WaitForSeconds(0.15f);
 
         private void Awake()
         {
@@ -36,26 +39,17 @@ namespace Initialization
             _loadingScreen.Show();
             _enemyPools.Init();
             _loadingScreen.SetProgress(0.1f);
-
-            yield return new WaitForSeconds(0.1f);
-
+            yield return _waitForSeconds;
             _loadingScreen.SetProgress(0.4f);
-
-            yield return null;
+            yield return _waitForSeconds;
             _playerLifeSystem.Health.Reset();
             _player.gameObject.SetActive(true);
             _gameSession.Init(_gameOverScreen, _playerLifeSystem, _waveSequence, _winnerScreen);
-
             _loadingScreen.SetProgress(0.6f);
-
-            yield return new WaitForSeconds(0.3f);
-
+            yield return _waitForSeconds;
             _loadingScreen.SetProgress(1f);
-
             yield return _loadingScreen.FadeOut();
             _playerLook.enabled = true;
-
-
             _waveActivator.ActivateWave();
         }
     }

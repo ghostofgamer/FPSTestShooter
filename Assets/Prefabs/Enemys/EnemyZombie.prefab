@@ -292,11 +292,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c500a217ce6da499c7fd932dbd7f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 3
-  _attackCooldown: 3
   _enemyAttack: {fileID: 1534156436436458549}
   _enemyAnimation: {fileID: 3036711769425895512}
   _enemyHealthHandler: {fileID: 8489050576744114190}
+  _attackRange: 3
+  _attackCooldown: 3
 --- !u!114 &8489050576744114190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +313,7 @@ MonoBehaviour:
   _enemyAnimation: {fileID: 3036711769425895512}
   _ragdollHandler: {fileID: 8665989103551077555}
   _enemyAI: {fileID: 7937016480658020989}
+  _deactivateDelay: 5
 --- !u!114 &8665989103551077555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAnimation: {fileID: 3036711769425895512}
+  _damage: 15
   _enemyAI: {fileID: 7937016480658020989}
 --- !u!195 &4636604578101383875
 NavMeshAgent:

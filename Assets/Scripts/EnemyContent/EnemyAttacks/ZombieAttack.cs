@@ -4,23 +4,22 @@ namespace EnemyContent.EnemyAttacks
 {
     public class ZombieAttack : EnemyAttack
     {
-        [SerializeField]private EnemyAnimation _enemyAnimation;
-        [SerializeField]private EnemyAI _enemyAI;
-        
+        [SerializeField] private EnemyAI _enemyAI;
+
         private void OnEnable()
         {
-            _enemyAnimation.AttackHitEvent += Attack;
+            EnemyAnimation.AttackHitEvent += Attack;
         }
-        
+
         private void OnDisable()
         {
-            _enemyAnimation.AttackHitEvent -= Attack;
+            EnemyAnimation.AttackHitEvent -= Attack;
         }
-        
+
         public override void Attack()
         {
             if (_enemyAI.IsPlayerInAttackRange())
-                _enemyAI.Player.TakeDamage(10, Vector3.zero, _enemyAI.transform.position);
+                _enemyAI.Player.TakeDamage(Damage, Vector3.zero, _enemyAI.transform.position);
             else
                 Debug.Log("Удар промахнулся — игрок слишком далеко");
         }

@@ -38,10 +38,6 @@ namespace HealthContent
                 return;
 
             CurrentHealth -= damage;
-            
-            Debug.Log("Damaged " + gameObject.name + " to " + damage);
-            Debug.Log("CurrentHealth " + gameObject.name + " to " + CurrentHealth);
-            Debug.Log("_minHealth " + gameObject.name + " to " + _minHealth);
 
             if (CurrentHealth <= _minHealth)
             {

@@ -4,21 +4,27 @@ namespace PlayerContent
 {
     public class PlayerLook : MonoBehaviour
     {
-        [SerializeField] private float _mouseSensitivity = 100f;
+// @formatter:off
+        [Header("References")]
         [SerializeField] private Transform _playerBody;
         [SerializeField] private PlayerInput _playerInput;
-        [SerializeField] private float  _minXRotate;
-        [SerializeField] private float  _maxXRotate;
-        
+        [Header("Settings")]
+        [SerializeField] private float _mouseSensitivity = 100f;
+        [SerializeField] private float _minXRotate;
+        [SerializeField] private float _maxXRotate;
+// @formatter:on
+
         private float xRotation = 0f;
+        private float _mouseX;
+        private float _mouseY;
+        private float _zero = 0f;
 
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            
-            xRotation = 0f;
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            xRotation = _zero;
+            transform.localRotation = Quaternion.Euler(xRotation, _zero, _zero);
         }
 
         private void Update()
@@ -28,12 +34,12 @@ namespace PlayerContent
 
         private void Rotate(float mouseXValue, float mouseYValue)
         {
-            float mouseX = mouseXValue * _mouseSensitivity * Time.deltaTime;
-            float mouseY = mouseYValue * _mouseSensitivity * Time.deltaTime;
-            xRotation -= mouseY;
+            _mouseX = mouseXValue * _mouseSensitivity * Time.deltaTime;
+            _mouseY = mouseYValue * _mouseSensitivity * Time.deltaTime;
+            xRotation -= _mouseY;
             xRotation = Mathf.Clamp(xRotation, _minXRotate, _maxXRotate);
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            _playerBody.Rotate(Vector3.up * mouseX);
+            transform.localRotation = Quaternion.Euler(xRotation, _zero, _zero);
+            _playerBody.Rotate(Vector3.up * _mouseX);
         }
     }
 }

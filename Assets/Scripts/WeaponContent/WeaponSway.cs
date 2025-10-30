@@ -17,10 +17,16 @@ namespace WeaponContent
         [SerializeField] private float _ySwayMultiplier = 10f; 
         [SerializeField] private float _zSwayMultiplier = 15f;
         [SerializeField] private float _mouseMoveThreshold = 0.01f;
-         
+        [SerializeField]private float _factor = 0.5f;
+// @formatter:on
+
         private Vector3 _initialPosition;
         private Quaternion _initialRotation;
-// @formatter:on
+        private float _mouseSpeed;
+        private float _swayX;
+        private float _swayY;
+        private Vector3 _targetPosition;
+        private Quaternion _targetRotation;
 
         private void Start()
         {
@@ -30,24 +36,22 @@ namespace WeaponContent
 
         private void Update()
         {
-            float mouseSpeed = Mathf.Clamp01(
-                (Mathf.Abs(_playerInput.MouseXValue) + Mathf.Abs(_playerInput.MouseYValue)) * 0.5f);
+            _mouseSpeed = Mathf.Clamp01(
+                (Mathf.Abs(_playerInput.MouseXValue) + Mathf.Abs(_playerInput.MouseYValue)) * _factor);
+            _weaponAnimator.PlayMoveIdleAnimation(_mouseSpeed);
 
-            _weaponAnimator.PlayMoveIdleAnimation(mouseSpeed);
-
-            if (_playerInput.IssAiming)
+            if (_playerInput.IsAiming)
                 return;
-
-
-            float swayX = Mathf.Clamp(-_playerInput.MouseXValue * _swayAmount, -_maxSwayAmount, _maxSwayAmount);
-            float swayY = Mathf.Clamp(-_playerInput.MouseYValue * _swayAmount, -_maxSwayAmount, _maxSwayAmount);
-            Vector3 targetPosition = _initialPosition + new Vector3(swayX, swayY, 0);
-            Quaternion targetRotation = _initialRotation *
-                                        Quaternion.Euler(swayX * _xSwayMultiplier, 0, swayY * _zSwayMultiplier);
+            
+            _swayX = Mathf.Clamp(-_playerInput.MouseXValue * _swayAmount, -_maxSwayAmount, _maxSwayAmount);
+            _swayY = Mathf.Clamp(-_playerInput.MouseYValue * _swayAmount, -_maxSwayAmount, _maxSwayAmount);
+            _targetPosition = _initialPosition + new Vector3(_swayX, _swayY, 0);
+            _targetRotation = _initialRotation *
+                              Quaternion.Euler(_swayX * _xSwayMultiplier, 0, _swayY * _zSwayMultiplier);
             transform.localPosition =
-                Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * _smoothAmount);
+                Vector3.Lerp(transform.localPosition, _targetPosition, Time.deltaTime * _smoothAmount);
             transform.localRotation =
-                Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * _smoothAmount);
+                Quaternion.Slerp(transform.localRotation, _targetRotation, Time.deltaTime * _smoothAmount);
         }
     }
 }

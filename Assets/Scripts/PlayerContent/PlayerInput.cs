@@ -11,7 +11,7 @@ namespace PlayerContent
         private const string Vertical = "Vertical";
         private const string Jump = "Jump";
         
-        public bool IssAiming{ get; private set; }
+        public bool IsAiming{ get; private set; }
         public float MouseXValue { get; private set; }
         public float MouseYValue { get; private set; }
         public float X { get; private set; }
@@ -23,8 +23,6 @@ namespace PlayerContent
         public event Action<bool> AimStateChanged;
         public event Action MouseLeftKeyPressed;
         public event Action MouseLeftKeyReleased;
-        public event Action MouseZeroKeyHoldDown;
-        public event Action PausePressed;
         public event Action JumpPressed;
 
         private void Update()
@@ -42,8 +40,8 @@ namespace PlayerContent
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    IssAiming = !IssAiming;
-                    AimStateChanged?.Invoke(IssAiming);
+                    IsAiming = !IsAiming;
+                    AimStateChanged?.Invoke(IsAiming);
                 }
 
                 if (Input.GetButtonDown(Jump))

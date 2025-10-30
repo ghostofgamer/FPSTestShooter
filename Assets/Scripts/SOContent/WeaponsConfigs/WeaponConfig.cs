@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SOContent
+namespace SOContent.WeaponsConfigs
 {
     [CreateAssetMenu(fileName = "NewWeaponConfig", menuName = "Weapons/WeaponConfig")]
     public class WeaponConfig : ScriptableObject

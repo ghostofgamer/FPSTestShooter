@@ -8,6 +8,12 @@ namespace DecalContent
         [SerializeField] private float _lifeTime = 3.0f;
 
         private Coroutine _coroutine;
+        private WaitForSeconds _waitForSeconds;
+
+        private void Awake()
+        {
+            _waitForSeconds = new WaitForSeconds(_lifeTime);
+        }
 
         private void OnEnable()
         {
@@ -19,7 +25,7 @@ namespace DecalContent
 
         private IEnumerator TurnOff()
         {
-            yield return new WaitForSeconds(_lifeTime);
+            yield return _waitForSeconds;
             gameObject.SetActive(false);
         }
     }

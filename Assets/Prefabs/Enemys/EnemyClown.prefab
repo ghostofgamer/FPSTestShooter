@@ -6520,11 +6520,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c500a217ce6da499c7fd932dbd7f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 3
-  _attackCooldown: 3
   _enemyAttack: {fileID: 3849693128609684530}
   _enemyAnimation: {fileID: 8658029469354453413}
   _enemyHealthHandler: {fileID: 4473040245634820441}
+  _attackRange: 3
+  _attackCooldown: 3
 --- !u!114 &4473040245634820441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6541,6 +6541,7 @@ MonoBehaviour:
   _enemyAnimation: {fileID: 8658029469354453413}
   _ragdollHandler: {fileID: 3637860288784897923}
   _enemyAI: {fileID: 1241589492088090740}
+  _deactivateDelay: 5
 --- !u!114 &3637860288784897923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6579,10 +6580,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9e21d4b7f21d645afa9d13a66fc025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 3081359631794264162}
   _enemyAnimation: {fileID: 8658029469354453413}
-  _radius: 5
   _damage: 45
+  _health: {fileID: 3081359631794264162}
+  _radius: 5
+  _forceFactor: 5
   _explodeParticles: {fileID: 1585125255856767460}
   _audioSource: {fileID: 1660781282605560642}
   _explosionClip: {fileID: 8300000, guid: 79c3cb7a26813d146b07c293b0324039, type: 3}

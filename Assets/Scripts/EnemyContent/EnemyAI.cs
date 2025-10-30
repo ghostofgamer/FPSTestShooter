@@ -5,27 +5,26 @@ using UnityEngine.AI;
 
 namespace EnemyContent
 {
+    [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyAI : MonoBehaviour
     {
-        [SerializeField] private float _attackRange = 2f;
-        [SerializeField] private float _attackCooldown = 1f;
+// @formatter:off
+        [Header("References")]
         [SerializeField] private EnemyAttack _enemyAttack;
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private EnemyHealthHandler _enemyHealthHandler;
+        [Header("Settings")]
+        [SerializeField] private float _attackRange = 2f;
+        [SerializeField] private float _attackCooldown = 1f;
+// @formatter:on
 
         private Transform _player;
         private NavMeshAgent _agent;
         private float _lastAttackTime;
+        private float _distance;
 
         public EnemyHealthHandler EnemyHealthHandler => _enemyHealthHandler;
         public IDamageable Player { get; private set; }
-
-        public void Init(Transform Player)
-        {
-            _player = Player;
-            _agent = GetComponent<NavMeshAgent>();
-            this.Player = _player.GetComponent<IDamageable>();
-        }
 
         private void OnEnable()
         {
@@ -41,9 +40,9 @@ namespace EnemyContent
         {
             if (_player == null || _enemyHealthHandler.IsDead) return;
 
-            float distance = Vector3.Distance(transform.position, _player.position);
+            _distance = Vector3.Distance(transform.position, _player.position);
 
-            if (distance > _attackRange)
+            if (_distance > _attackRange)
             {
                 _agent.isStopped = false;
                 _agent.SetDestination(_player.position);
@@ -55,6 +54,22 @@ namespace EnemyContent
                 _enemyAnimation.PlayWalk(false);
                 TryAttack();
             }
+        }
+
+        public void Init(Transform player)
+        {
+            _enemyHealthHandler.Init();
+            _player = player;
+            _agent = GetComponent<NavMeshAgent>();
+            this.Player = _player.GetComponent<IDamageable>();
+        }
+
+        public bool IsPlayerInAttackRange()
+        {
+            if (_player == null)
+                return false;
+
+            return Vector3.Distance(transform.position, _player.position) <= _attackRange;
         }
 
         private void StopNavMesh(EnemyAI enemyAI)
@@ -69,14 +84,6 @@ namespace EnemyContent
 
             _lastAttackTime = Time.time;
             _enemyAnimation.PlayAttack();
-        }
-
-        public bool IsPlayerInAttackRange()
-        {
-            if (_player == null)
-                return false;
-
-            return Vector3.Distance(transform.position, _player.position) <= _attackRange;
         }
     }
 }

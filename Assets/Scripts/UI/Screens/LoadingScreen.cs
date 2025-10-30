@@ -6,18 +6,24 @@ namespace UI.Screens
 {
     public class LoadingScreen : MonoBehaviour
     {
-        [Header("UI Elements")]
+// @formatter:off
+        [Header("UI Elements")] 
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private Image fillImage;
+        [Header("Settings")]
         [SerializeField] private float fadeDuration = 0.5f;
         [SerializeField] private float fillSmoothSpeed = 3f;
+// @formatter:on
 
         private float _targetFill = 0f;
         private bool _isVisible;
+        private float _elapsedTime;
+        private float _fullApha = 1f;
+        private float _zeroAlpha = 0f;
 
         private void Awake()
         {
-            canvasGroup.alpha = 1f;
+            canvasGroup.alpha = _fullApha;
             canvasGroup.blocksRaycasts = true;
             fillImage.fillAmount = 0f;
             _isVisible = true;
@@ -31,9 +37,9 @@ namespace UI.Screens
         public void Show()
         {
             gameObject.SetActive(true);
-            canvasGroup.alpha = 1f;
+            canvasGroup.alpha = _fullApha;
             canvasGroup.blocksRaycasts = true;
-            fillImage.fillAmount = 0f;
+            fillImage.fillAmount = _zeroAlpha;
             _isVisible = true;
         }
 
@@ -44,16 +50,16 @@ namespace UI.Screens
 
         public IEnumerator FadeOut()
         {
-            float t = 0f;
-            
-            while (t < fadeDuration)
+            _elapsedTime = 0f;
+
+            while (_elapsedTime < fadeDuration)
             {
-                t += Time.deltaTime;
-                canvasGroup.alpha = Mathf.Lerp(1f, 0f, t / fadeDuration);
+                _elapsedTime += Time.deltaTime;
+                canvasGroup.alpha = Mathf.Lerp(_fullApha, _zeroAlpha, _elapsedTime / fadeDuration);
                 yield return null;
             }
 
-            canvasGroup.alpha = 0f;
+            canvasGroup.alpha = _zeroAlpha;
             canvasGroup.blocksRaycasts = false;
             gameObject.SetActive(false);
             _isVisible = false;

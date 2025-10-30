@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private WaveMonitor waveMonitor;
 
     private int _currentWaveIndex = 0;
+    private Transform _spawnPoint;
 
     public void SpawnEnemy(EnemyType type)
     {
@@ -21,9 +22,9 @@ public class Spawner : MonoBehaviour
         if (enemy == null)
             return;
 
-        Transform spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
-        enemy.transform.position = spawnPoint.position;
-        enemy.transform.rotation = spawnPoint.rotation;
+        _spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+        enemy.transform.position = _spawnPoint.position;
+        enemy.transform.rotation = _spawnPoint.rotation;
 
         if (enemy.TryGetComponent(out EnemyAI enemyAI))
         {

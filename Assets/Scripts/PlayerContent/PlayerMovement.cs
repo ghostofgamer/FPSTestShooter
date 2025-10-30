@@ -4,10 +4,13 @@ namespace PlayerContent
 {
     public class PlayerMovement : MonoBehaviour
     {
+// @formatter:off
+        [Header("References")]
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private Transform _groundCheck;
         [SerializeField] private LayerMask _groundMask;
+        [Header("Settings")]
         [SerializeField] private float _speedWalk = 13;
         [SerializeField] private float _speedRun = 31;
         [SerializeField] private float _groundDistance = 0.4f;
@@ -16,6 +19,7 @@ namespace PlayerContent
         [SerializeField] private float _minHeight = 1.5f;
         [SerializeField] private float _maxHeight = 3f;
         [SerializeField] private float _factor = 2f;
+// @formatter:on
 
         private float _x;
         private float _z;

@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using SOContent;
+using SOContent.WeaponsConfigs;
 using UnityEngine;
 
 namespace WeaponContent
@@ -14,6 +14,8 @@ namespace WeaponContent
         [SerializeField] private HitHandler _hitHandler;
 
         private int _currentAmmoMagazine;
+        private WaitForSeconds _waitForReload = new WaitForSeconds(2f);
+        private Coroutine _reloadCoroutine;
 
         public event Action<int> AmmoChanged;
 
@@ -28,7 +30,7 @@ namespace WeaponContent
         public void OnHit(RaycastHit hit)
         {
             if (!HasAmmo()) return;
-            
+
             _hitHandler.ProcessHit(hit, _weaponConfig.Damage, _weaponConfig.Force);
         }
 
@@ -45,7 +47,10 @@ namespace WeaponContent
 
         public void WeaponReload()
         {
-            StartCoroutine(ReloadRoutine());
+            if (_reloadCoroutine != null)
+                StopCoroutine(_reloadCoroutine);
+
+            _reloadCoroutine = StartCoroutine(ReloadRoutine());
         }
 
         private void InitAmmo()
@@ -59,7 +64,7 @@ namespace WeaponContent
             IsReload = true;
             _weaponAnimator.PlayReload();
             _audioSource.PlayOneShot(_weaponConfig.ReloadSound);
-            yield return new WaitForSeconds(2f);
+            yield return _waitForReload;
             InitAmmo();
             IsReload = false;
         }

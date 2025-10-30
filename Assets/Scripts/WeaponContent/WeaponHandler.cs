@@ -21,6 +21,16 @@ namespace WeaponContent
         private Coroutine _aimCoroutine;
         private Coroutine _autoFireCoroutine;
         private bool _isShooting = false;
+        private float _elapsedTime;
+        private float _time;
+        private float _range;
+        private int _layerMaskForRaycast;
+        private Vector3 _startPosition;
+        private Vector3 _endPosition;
+        private Quaternion _startRotation;
+        private Quaternion _endRotation;
+        private Transform _targetPos;
+        private Ray _ray;
 
         private void OnEnable()
         {
@@ -67,7 +77,7 @@ namespace WeaponContent
             while (_isShooting)
             {
                 FireWeapon();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(_currentWeapon.WeaponConfig.FireRate);
             }
         }
 
@@ -76,13 +86,13 @@ namespace WeaponContent
             if (_currentWeapon == null || _currentWeapon.IsReload)
                 return;
 
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            _ray = _camera.ScreenPointToRay(Input.mousePosition);
             _currentWeapon.Shoot();
 
-            float range = _currentWeapon.WeaponConfig.Range;
-            int layerMaskForRaycast = ~_ignoreMask;
+            _range = _currentWeapon.WeaponConfig.Range;
+            _layerMaskForRaycast = ~_ignoreMask;
 
-            if (Physics.Raycast(ray, out RaycastHit hit, range, layerMaskForRaycast, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(_ray, out RaycastHit hit, _range, _layerMaskForRaycast, QueryTriggerInteraction.Ignore))
                 _currentWeapon.OnHit(hit);
         }
 
@@ -102,27 +112,24 @@ namespace WeaponContent
 
         private IEnumerator MoveWeapon(bool toAiming)
         {
-            Transform targetPos = toAiming ? _weaponPosAiming : _weaponPosDefault;
+            _targetPos = toAiming ? _weaponPosAiming : _weaponPosDefault;
+            _startPosition = _currentWeapon.transform.localPosition;
+            _startRotation = _currentWeapon.transform.localRotation;
+            _endPosition = _targetPos.localPosition;
+            _endRotation = _targetPos.localRotation;
+            _elapsedTime = 0f;
 
-            Vector3 startPos = _currentWeapon.transform.localPosition;
-            Quaternion startRot = _currentWeapon.transform.localRotation;
-
-            Vector3 endPos = targetPos.localPosition;
-            Quaternion endRot = targetPos.localRotation;
-
-            float elapsed = 0f;
-
-            while (elapsed < _aimTransitionTime)
+            while (_elapsedTime < _aimTransitionTime)
             {
-                elapsed += Time.deltaTime;
-                float t = elapsed / _aimTransitionTime;
-                _currentWeapon.transform.localPosition = Vector3.Lerp(startPos, endPos, t);
-                _currentWeapon.transform.localRotation = Quaternion.Lerp(startRot, endRot, t);
+                _elapsedTime += Time.deltaTime;
+                _time = _elapsedTime / _aimTransitionTime;
+                _currentWeapon.transform.localPosition = Vector3.Lerp(_startPosition, _endPosition, _time);
+                _currentWeapon.transform.localRotation = Quaternion.Lerp(_startRotation, _endRotation, _time);
                 yield return null;
             }
 
-            _currentWeapon.transform.localPosition = endPos;
-            _currentWeapon.transform.localRotation = endRot;
+            _currentWeapon.transform.localPosition = _endPosition;
+            _currentWeapon.transform.localRotation = _endRotation;
         }
     }
 }
